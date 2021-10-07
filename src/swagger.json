@@ -1,0 +1,316 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Desafio Trilha II Ignite - Documentation",
+        "description": "API de desafio da trilha II de NodeJS",
+        "version": "1.0.0",
+        "contact": {
+            "email": "lucasnaliato07@gmail.com"
+        }
+    },
+    "paths": {
+        "/users": {
+            "post": {
+                "tags": ["User"],
+                "summary": "Create a user",
+                "description": "Create a new user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "name": "Lucas Naliato",
+                                    "description": "lucas@rocketseat.com.br"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "admin": {
+                                            "type": "boolean"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "created_at": {
+                                            "type": "date"
+                                        },
+                                        "updated_at": {
+                                            "type": "date"
+                                        }
+                                    },
+                                    "example": {
+                                        "id": "e5f65871-359c-4590-bc3f-64d8f0b025db",
+                                        "admin": false,
+                                        "name": "Lucas Naliato",
+                                        "email": "lucas@rocketseat.com.br",
+                                        "created_at": "2021-10-05T04:10:40.208Z",
+                                        "updated_at": "2021-10-05T04:10:40.208Z"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "User already exists!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "error": "User already exists!"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": ["User"],
+                "summary": "List all users",
+                "description": "Only `admins` can access",
+                "parameters": [
+                {
+                    "name": "user_id",
+                    "in": "header",
+                    "schema": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "required": "true"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "properties": {
+                                            "admin": {
+                                                "type": "boolean"
+                                              },
+                                              "id": {
+                                                "type": "string"
+                                              },
+                                              "name": {
+                                                "type": "string"
+                                              },
+                                              "email": {
+                                                "type": "string"
+                                              },
+                                              "created_at": {
+                                                "type": "string"
+                                              },
+                                              "updated_at": {
+                                                "type": "string"
+                                              }
+                                        },
+                                        "example": [
+                                            {
+                                              "id": "4cf6ebb0-f1ae-4c68-bcb0-9335bcfabc4e",
+                                              "admin": true,
+                                              "name": "Lucas",
+                                              "email": "teste@email.com",
+                                              "created_at": "2021-10-06T16:39:14.736Z",
+                                              "updated_at": "2021-10-06T16:40:47.155Z"
+                                            },
+                                            {
+                                              "id": "4758544e-9354-4720-b5a7-8d77c8121f3b",
+                                              "admin": false,
+                                              "name": "Lucas 2",
+                                              "email": "teste2@email.com",
+                                              "created_at": "2021-10-06T16:43:43.824Z",
+                                              "updated_at": "2021-10-06T16:43:43.824Z"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                    },
+                    "400": {
+                        "description": "User not exists or Permission denied",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "error":"Permission denied"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{user_id}": {
+            "get": {
+                "tags": ["User"],
+                "summary": "Return user by id",
+                "description": "Returns an user by his own id",
+                "parameters": [
+                {
+                    "name": "user_id",
+                    "in": "path",
+                    "schema": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "required": "true"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                            "admin": {
+                                                "type": "boolean"
+                                              },
+                                              "id": {
+                                                "type": "string"
+                                              },
+                                              "name": {
+                                                "type": "string"
+                                              },
+                                              "email": {
+                                                "type": "string"
+                                              },
+                                              "created_at": {
+                                                "type": "string"
+                                              },
+                                              "updated_at": {
+                                                "type": "string"
+                                              }
+                                        },
+                                        "example": 
+                                            {
+                                              "id": "4cf6ebb0-f1ae-4c68-bcb0-9335bcfabc4e",
+                                              "admin": false,
+                                              "name": "Lucas",
+                                              "email": "teste@email.com",
+                                              "created_at": "2021-10-06T16:39:14.736Z",
+                                              "updated_at": "2021-10-06T16:40:47.155Z"
+                                            }
+
+                                    }
+                                }
+                            }
+                    },
+                    "404": {
+                        "description": "User not exists",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "error": "User not exists"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{user_id}/admin": {
+            "patch": {
+                "tags": ["User"],
+                "summary": "Turn user admin",
+                "description": "Turns an user to admin",
+                "parameters": [
+                {
+                    "name": "user_id",
+                    "in": "path",
+                    "schema": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "required": "true"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                            "admin": {
+                                                "type": "boolean"
+                                              },
+                                              "id": {
+                                                "type": "string"
+                                              },
+                                              "name": {
+                                                "type": "string"
+                                              },
+                                              "email": {
+                                                "type": "string"
+                                              },
+                                              "created_at": {
+                                                "type": "string"
+                                              },
+                                              "updated_at": {
+                                                "type": "string"
+                                              }
+                                        },
+                                        "example": 
+                                            {
+                                              "id": "4cf6ebb0-f1ae-4c68-bcb0-9335bcfabc4e",
+                                              "admin": true,
+                                              "name": "Lucas",
+                                              "email": "teste@email.com",
+                                              "created_at": "2021-10-06T16:39:14.736Z",
+                                              "updated_at": "2021-10-06T16:40:47.155Z"
+                                            }
+
+                                    }
+                                }
+                            }
+                    },
+                    "404": {
+                        "description": "User not exists",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "error": "User not exists"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
